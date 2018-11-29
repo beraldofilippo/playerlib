@@ -7,6 +7,7 @@ This is a simple bare-bone module whcih allows background playing from a HTTP st
 - Uses audio focus wrapping, to perform handling of audio focus in Android O+ style.
 - Shows an ongoing notification for the user to control playback, using PlayerNotificationManager form ExoPlayer.
 - It is completely decoupled from whichever implementation any users wants for the player activity.
+- This is untested.
 
 ## How to get it
 - Set up a main `app` project as usual
