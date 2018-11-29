@@ -27,7 +27,7 @@ Change the source of the stream changing the `Player.kt` file, in the `start()` 
         android:label="@string/app_name"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="com.mypackage.PlayerActivity"
+            android:name="com.beraldo.myapp.PlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:label="PlayerActivity">
             <intent-filter>
@@ -105,6 +105,51 @@ class PlayerActivity : AppCompatActivity(), AnkoLogger {
         android:layout_height="match_parent" />
 
 </FrameLayout>
+```
+*build.gradle* of module `app` after importing the module (see there's `implementation project(path: ':playerlib')`)
+```
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+    defaultConfig {
+        applicationId "com.beraldo.myapp"
+        minSdkVersion 26
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.9.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'org.jetbrains.anko:anko:0.10.8'
+    implementation project(path: ':playerlib')
+}
+repositories {
+    mavenCentral()
+}
+
 ```
 
 ## Acknowledgments
