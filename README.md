@@ -1,5 +1,5 @@
 # playerlib - ExoPlayer HTTP audio streaming with foreground service, Android O+ compliant
-This is a simple bare-bone module whcih allows background playing from a HTTP stream, using ExoPlayer. It is compliant with all Android O+ requirements as foreground services are concerned.
+This is a simple bare-bone module which allows background playing from a HTTP stream, using ExoPlayer. It is compliant with all Android O+ requirements as foreground services are concerned.
 
 ## Features
 - One hundred percent Kotlin.
