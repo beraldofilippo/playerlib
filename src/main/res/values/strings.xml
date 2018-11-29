@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">playerlib</string>
+    <string name="notification_title">Radio Streaming</string>
+</resources>
