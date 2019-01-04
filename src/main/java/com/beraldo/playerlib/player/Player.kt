@@ -106,24 +106,6 @@ class PlayerHolder(private val context: Context,
      * [codelab](https://codelabs.developers.google.com/codelabs/exoplayer-intro/#5).
      */
     private fun attachLogging(exoPlayer: ExoPlayer) {
-        // Show toasts on state changes.
-        exoPlayer.addListener(object : Player.DefaultEventListener() {
-            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-                when (playbackState) {
-                    Player.STATE_ENDED -> {
-                        context.toast("Playback ended")
-                    }
-                    Player.STATE_READY -> when (playWhenReady) {
-                        true -> {
-                            context.toast("Playback started")
-                        }
-                        false -> {
-                            context.toast("Playback paused")
-                        }
-                    }
-                }
-            }
-        })
         // Write to log on state changes.
         exoPlayer.addListener(object : Player.DefaultEventListener() {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
