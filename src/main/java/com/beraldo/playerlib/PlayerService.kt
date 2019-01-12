@@ -16,6 +16,7 @@
 
 package com.beraldo.playerlib
 
+import android.app.IntentService
 import android.app.Notification
 import android.app.Service
 import android.content.Intent
@@ -29,7 +30,7 @@ import com.google.android.exoplayer2.ui.PlayerNotificationManager
  * Created by Filippo Beraldo on 15/11/2018.
  * http://github.com/beraldofilippo
  */
-class PlayerService : Service(), PlayerNotificationManager.NotificationListener {
+class PlayerService : IntentService("playerlib"), PlayerNotificationManager.NotificationListener {
 
     companion object {
         const val NOTIFICATION_ID = 100
@@ -87,4 +88,6 @@ class PlayerService : Service(), PlayerNotificationManager.NotificationListener 
     inner class PlayerServiceBinder : Binder() {
         fun getPlayerHolderInstance() = playerHolder
     }
+
+    override fun onHandleIntent(intent: Intent?) {}
 }
