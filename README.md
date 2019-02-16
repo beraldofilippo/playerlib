@@ -155,4 +155,8 @@ repositories {
 ## Acknowledgments
 I took inspiration from the *Google codelabs for ExoPlayer* https://codelabs.developers.google.com/codelabs/exoplayer-intro/#0 and mixed it up with *Architecting Video Playback through a Service* https://proandroiddev.com/architecting-video-playback-through-a-service-501c7bd158fa and other stuff I don't remember.
 
+## Apps
+I have used this lib to develop my streaming app for a web radio called RadioUci
+<a href='https://play.google.com/store/apps/details?id=com.beraldo.radiouci&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png'/></a>
+
 
