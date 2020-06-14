@@ -108,52 +108,21 @@ class PlayerActivity : AppCompatActivity(), AnkoLogger {
 ```
 *build.gradle* of module `app` after importing the module (see there's `implementation project(path: ':playerlib')`)
 ```
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+[...]
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
-    defaultConfig {
-        applicationId "com.beraldo.myapp"
-        minSdkVersion 26
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+    [...]
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.9.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'org.jetbrains.anko:anko:0.10.8'
+    [...]
     implementation project(path: ':playerlib')
-}
-repositories {
-    mavenCentral()
 }
 
 ```
 
 ## Acknowledgments
-I took inspiration from the *Google codelabs for ExoPlayer* https://codelabs.developers.google.com/codelabs/exoplayer-intro/#0 and mixed it up with *Architecting Video Playback through a Service* https://proandroiddev.com/architecting-video-playback-through-a-service-501c7bd158fa and other stuff I don't remember.
+I took inspiration from the *Google codelabs for ExoPlayer* https://codelabs.developers.google.com/codelabs/exoplayer-intro/#0 and mixed it up with *Architecting Video Playback through a Service* https://proandroiddev.com/architecting-video-playback-through-a-service-501c7bd158fa.
 
 ## Apps
 I have used this lib to develop my streaming app for a web radio called RadioUci
