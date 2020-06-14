@@ -19,7 +19,7 @@ package com.beraldo.playerlib.player
 import android.content.Context
 import android.media.AudioManager
 import android.net.Uri
-import android.support.v4.media.AudioAttributesCompat
+import androidx.media.AudioAttributesCompat
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -30,7 +30,6 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
-import org.jetbrains.anko.toast
 
 /**
  * Creates and manages a [com.google.android.exoplayer2.ExoPlayer] instance.
@@ -67,7 +66,7 @@ class PlayerHolder(private val context: Context,
     // Prepare playback.
     fun start() {
         // Load media.
-        audioFocusPlayer.prepare(buildMediaSource(Uri.parse("http://nr9.newradio.it:9330/")))
+        audioFocusPlayer.prepare(buildMediaSource(Uri.parse("https://nr9.newradio.it:19423/stream")))
         // Restore state (after onResume()/onStart())
         with(playerState) {
             // Start playback when media has buffered enough
