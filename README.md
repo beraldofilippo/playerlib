@@ -5,7 +5,7 @@ This is a simple bare-bone module which allows background playing from a HTTP st
 - One hundred percent Kotlin.
 - Uses foreground service to ensure playback is preserved when in background.
 - Uses audio focus wrapping, to perform handling of audio focus in Android O+ style.
-- Shows an ongoing notification for the user to control playback, using PlayerNotificationManager form ExoPlayer.
+- Shows an ongoing notification for the user to control playback, using PlayerNotificationManager from ExoPlayer.
 - It is completely decoupled from whichever implementation any users wants for the player activity.
 - This is untested.
 
@@ -16,8 +16,8 @@ This is a simple bare-bone module which allows background playing from a HTTP st
 - Go to `Project structure` and add playerlib as a dependency
 
 ## How to use it
-Simple and self explanatory, just an actvity which launches the service, and a broadcast receiver to handle the launch of the activity from the player notification (when it gets clicked).
-Change the source of the stream changing the `Player.kt` file, in the `start()` method.
+An activity which launches the service, and a broadcast receiver to handle the launch of the activity from the player notification (when it gets clicked).
+It is possible to launch the stream with a custom url to the stream. 
 
 *AndroidManifest.xml*
 ```
@@ -67,7 +67,9 @@ class PlayerActivity : AppCompatActivity(), AnkoLogger {
         setContentView(R.layout.activity_player)
 
         //Start the service
-        val intent = Intent(this, PlayerService::class.java)
+        val intent = Intent(this, PlayerService::class.java).apply {
+            putExtra(STREAM_URL, "http://my.stream.url")
+        }
         bindService(intent, connection, Context.BIND_AUTO_CREATE)
     }
 
@@ -82,30 +84,13 @@ class PlayerActivity : AppCompatActivity(), AnkoLogger {
          */
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             if (service is PlayerService.PlayerServiceBinder) {
-                // Get the instance of the player from the service and set it as player to our playerView
-                player_view.player = service.getPlayerHolderInstance().audioFocusPlayer
+                service.getPlayerHolderInstance() // use the player and call methods on it to start and stop
             }
         }
     }
 }
 ```
-*activity_player.xml*
-```
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.beraldo.radiouci.PlayerActivity"
-    tools:showIn="@layout/activity_player">
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/player_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</FrameLayout>
-```
 *build.gradle* of module `app` after importing the module (see there's `implementation project(path: ':playerlib')`)
 ```
 [...]

@@ -33,9 +33,11 @@ import org.jetbrains.anko.warn
  * audio focus using [AudioFocusRequest] on Oreo+ devices, and an
  * [AudioManager.OnAudioFocusChangeListener] on previous versions.
  */
-class AudioFocusWrapper(private val audioAttributes: AudioAttributesCompat,
-                        private val audioManager: AudioManager,
-                        private val player: SimpleExoPlayer) : ExoPlayer by player, AnkoLogger {
+class AudioFocusWrapper(
+    private val audioAttributes: AudioAttributesCompat,
+    private val audioManager: AudioManager,
+    private val player: SimpleExoPlayer
+) : ExoPlayer by player, AnkoLogger {
     private var shouldPlayWhenReady = false
 
     private val audioFocusListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
@@ -74,9 +76,11 @@ class AudioFocusWrapper(private val audioAttributes: AudioAttributesCompat,
             requestAudioFocusOreo()
         } else {
             @Suppress("deprecation")
-            audioManager.requestAudioFocus(audioFocusListener,
-                    audioAttributes.legacyStreamType,
-                    AudioManager.AUDIOFOCUS_GAIN)
+            audioManager.requestAudioFocus(
+                audioFocusListener,
+                audioAttributes.legacyStreamType,
+                AudioManager.AUDIOFOCUS_GAIN
+            )
         }
 
         // Call the listener whenever focus is granted - even the first time!
@@ -106,10 +110,10 @@ class AudioFocusWrapper(private val audioAttributes: AudioAttributesCompat,
 
     @TargetApi(Build.VERSION_CODES.O)
     private fun buildFocusRequest(): AudioFocusRequest =
-            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
-                    .setAudioAttributes(audioAttributes.unwrap() as? AudioAttributes)
-                    .setOnAudioFocusChangeListener(audioFocusListener)
-                    .build()
+        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+            .setAudioAttributes(audioAttributes.unwrap() as? AudioAttributes)
+            .setOnAudioFocusChangeListener(audioFocusListener)
+            .build()
 }
 
 private const val MEDIA_VOLUME_DEFAULT = 1.0f

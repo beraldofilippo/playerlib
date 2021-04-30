@@ -29,15 +29,18 @@ import com.google.android.exoplayer2.ui.PlayerNotificationManager
  * Created by Filippo Beraldo on 15/11/2018.
  * http://github.com/beraldofilippo
  */
-class DescriptionAdapter(private val context: Context) : PlayerNotificationManager.MediaDescriptionAdapter {
+class DescriptionAdapter(private val context: Context) :
+    PlayerNotificationManager.MediaDescriptionAdapter {
 
-    override fun getCurrentContentTitle(player: Player): String = context.getString(R.string.notification_title)
+    override fun getCurrentContentTitle(player: Player): String =
+        context.getString(R.string.notification_title)
 
     override fun getCurrentContentText(player: Player): String? = null
 
-    // TODO
-    override fun getCurrentLargeIcon(player: Player,
-                                     callback: PlayerNotificationManager.BitmapCallback): Bitmap? = null
+    override fun getCurrentLargeIcon(
+        player: Player,
+        callback: PlayerNotificationManager.BitmapCallback
+    ): Bitmap? = null
 
     /**
      * Specify the PendingIntent which is fired whenever there's a click on the notification.
@@ -60,8 +63,10 @@ class DescriptionAdapter(private val context: Context) : PlayerNotificationManag
 
         val explicit = Intent(intent)
         for (resolveInfo in matches) {
-            val componentName = ComponentName(resolveInfo.activityInfo.applicationInfo.packageName,
-                    resolveInfo.activityInfo.name)
+            val componentName = ComponentName(
+                resolveInfo.activityInfo.applicationInfo.packageName,
+                resolveInfo.activityInfo.name
+            )
 
             explicit.component = componentName
         }

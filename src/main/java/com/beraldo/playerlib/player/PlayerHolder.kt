@@ -34,49 +34,48 @@ import org.jetbrains.anko.info
 /**
  * Creates and manages a [com.google.android.exoplayer2.ExoPlayer] instance.
  */
-
-data class PlayerState(var window: Int = 0,
-                       var position: Long = 0,
-                       var whenReady: Boolean = true)
-
-class PlayerHolder(private val context: Context,
-                   private val playerState: PlayerState) : AnkoLogger {
+class PlayerHolder(
+    context: Context,
+    private val streamUrl: String,
+    private val playerState: PlayerState
+) : AnkoLogger {
     val audioFocusPlayer: ExoPlayer
 
     // Create the player instance.
     init {
         val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val audioAttributes = AudioAttributesCompat.Builder()
-                .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
-                .setUsage(AudioAttributesCompat.USAGE_MEDIA)
-                .build()
+            .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
+            .setUsage(AudioAttributesCompat.USAGE_MEDIA)
+            .build()
         audioFocusPlayer = AudioFocusWrapper(
-                audioAttributes,
-                audioManager,
-                ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector())
-        )
+            audioAttributes,
+            audioManager,
+            ExoPlayerFactory.newSimpleInstance(context, DefaultTrackSelector())
+        ).apply { prepare(buildMediaSource(Uri.parse(streamUrl))) }
         info { "SimpleExoPlayer created" }
     }
 
     private fun buildMediaSource(uri: Uri): MediaSource {
         return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory("exo-radiouci"))
-                .createMediaSource(uri)
+            .createMediaSource(uri)
     }
 
     // Prepare playback.
     fun start() {
-        // Load media.
-        audioFocusPlayer.prepare(buildMediaSource(Uri.parse("https://nr9.newradio.it:19423/stream")))
-        // Restore state (after onResume()/onStart())
-        with(playerState) {
-            // Start playback when media has buffered enough
-            // (whenReady is true by default).
-            audioFocusPlayer.playWhenReady = whenReady
-            audioFocusPlayer.seekTo(window, position)
-            // Add logging.
-            attachLogging(audioFocusPlayer)
+        with(audioFocusPlayer) {
+            // Restore state (after onResume()/onStart())
+            prepare(buildMediaSource(Uri.parse(streamUrl)))
+            with(playerState) {
+                // Start playback when media has buffered enough
+                // (whenReady is true by default).
+                playWhenReady = whenReady
+                seekTo(window, position)
+                // Add logging.
+                attachLogging(audioFocusPlayer)
+            }
+            info { "SimpleExoPlayer is started" }
         }
-        info { "SimpleExoPlayer is started" }
     }
 
     // Stop playback and release resources, but re-use the player instance.
